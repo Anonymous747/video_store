@@ -5,14 +5,15 @@ from flask_mysqldb import MySQL
 server = Flask(__name__)
 mysql = MySQL(server)
 
-#config
+# config
 server.config["MYSQL_HOST"] = os.environ.get("MYSQL_HOST")
 server.config["MYSQL_USER"] = os.environ.get("MYSQL_USER")
 server.config["MYSQL_PASSWORD"] = os.environ.get("MYSQL_PASSWORD")
 server.config["MYSQL_DB"] = os.environ.get("MYSQL_DB")
 server.config["MYSQL_PORT"] = os.environ.get("MYSQL_PORT")
 
-@server.route("/login", method=["POST"])
+
+@server.route("/login", methods=["POST"])
 def login():
     auth = request.authorization
     if not auth:
@@ -37,7 +38,7 @@ def login():
         return "invalid credentials", 401
 
 
-@server.route("/validate", method=["POST"])
+@server.route("/validate", methods=["POST"])
 def validate():
     encoded_jwt = request.headers["Authorization"]
 
@@ -54,6 +55,7 @@ def validate():
         return "not authorized", 403
 
     return decoded, 200
+
 
 def createJWT(username, secret, authz):
     return jwt.encode(
