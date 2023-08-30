@@ -3,6 +3,7 @@ import os, requests
 
 def login(request):
     auth = request.authorization
+
     if not auth:
         return None, ("missing credentials", 401)
 
@@ -13,6 +14,6 @@ def login(request):
     )
 
     if response.status_code == 200:
-        return response.txt, None
+        return response.text, None
     else:
-        return None, (response.txt, response.status_code)
+        return None, (response.text, response.status_code)
